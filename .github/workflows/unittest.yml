@@ -1,0 +1,27 @@
+# unittest ci in github
+name: unittest
+
+on:
+  workflow_dispatch:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+
+    steps:
+    - uses: actions/checkout@v4
+      
+    - name: install prerequisites
+      run: sudo apt-get install git help2man perl python3 make g++ libfl2 libfl-dev zlib1g zlib1g-dev
+      
+    - name: install verilator
+      run: sudo apt-get install verilator
+      
+    - name: run unittest
+      run: |
+        make -j$(nproc) prepare
+        make -j$(nproc) run
+      working-directory: hardware/riscv64/test
+
+
