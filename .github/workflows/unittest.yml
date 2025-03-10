@@ -9,6 +9,9 @@ on:
       - main
       - develop
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+
 jobs:
   build:
     runs-on: ubuntu-24.04
@@ -24,7 +27,6 @@ jobs:
       
     - name: run unittest
       run: |
-        make -j$(nproc) prepare
         make -j$(nproc) run
       working-directory: hardware/riscv64/test
 

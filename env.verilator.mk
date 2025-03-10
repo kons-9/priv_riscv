@@ -9,7 +9,7 @@ $(error Verilator 5 is not installed)
 endif
 
 VERILATOR_WARNINGS?=-Wall -Wno-PINCONNECTEMPTY -Wno-UNUSED -Wno-WIDTH -Wno-SELRANGE -Wno-DECLFILENAME
-VERILATOR_SV?=-sv --assert --quiet --trace
+VERILATOR_SV?=-sv --assert --trace
 VERILATOR_SV_TESTBENCH_FLAG?=--timing --binary -exe --main
 VERILATOR_CPP_TESTBENCH_FLAG?=--exe --cc
 VERILATOR_OPTIMIZATION_FLAG?=-O3 -MMD
