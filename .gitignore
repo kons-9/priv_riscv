@@ -1,3 +1,4 @@
 build
 *.log
 verible.filelist
+*params.svh
