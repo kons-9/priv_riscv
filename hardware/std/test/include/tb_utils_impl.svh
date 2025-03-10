@@ -1,7 +1,7 @@
 `ifndef TEST_UTILS_IMPL_SVH
 `define TEST_UTILS_IMPL_SVH
 
-`include "log.svh"
+`include "color.svh"
 
 int __failed_count = 0;
 int __number_of_test = 0;
@@ -52,8 +52,13 @@ task automatic __test_result();
         $display("Test Passed");
         $fwrite(__fd, "Test Passed\n");
         __pre_exit();
-        $finish;
+        __exit();
     end
+endtask
+
+task automatic __exit();
+    $finish(0);
+    $c("std::exit(0);");
 endtask
 
 task automatic __pre_exit();
@@ -65,7 +70,7 @@ task automatic __fatal_exit();
     if (__enable_fatal) begin
         $fatal;
     end else begin
-        $finish;
+        __exit();
     end
 endtask
 
