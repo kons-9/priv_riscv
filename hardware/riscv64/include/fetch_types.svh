@@ -6,9 +6,7 @@ package fetch_types;
         logic clk;
         logic rst_n;
     } input_t;
-    typedef struct {
-        logic [63:0] instr;
-    } output_t;
+    typedef struct {logic [63:0] instr;} output_t;
 endpackage
 
-`endif // FETCH_TYPES_SVH
+`endif  // FETCH_TYPES_SVH

@@ -8,7 +8,7 @@ module tb_decode;
     output_t decode_output;
 
     decode decode_inst (
-        .decode_input(decode_input),
+        .decode_input (decode_input),
         .decode_output(decode_output)
     );
 
