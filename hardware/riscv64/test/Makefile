@@ -33,8 +33,12 @@ RUN_TARGETS:=$(addprefix run_,$(TEST_TARGETS))
 
 OUTDIR:=build
 
-prepare: $(CONFIG_GENERATOR)
+PARAMS_FILE:=${RISCV64_TEST_DIR}/include/riscv64_params.svh
+.PHONY: prepare
+prepare: ${OUTDIR} ${PARAMS_FILE}
+${OUTDIR}:
 	mkdir -p ${OUTDIR}
+${PARAMS_FILE}: ${CONFIG_GENERATOR}
 	$(CONFIG_GENERATOR)
 
 .PHONY: run
@@ -53,7 +57,7 @@ echo:
 	@echo ${RISCV64_SRC_FILES}
 	@echo ${RISCV64_DIR}
 
-build/Vtb_%: ${RISCV64_SRC_FILES} src/tb_%.sv
+build/Vtb_%: prepare ${RISCV64_SRC_FILES} src/tb_%.sv
 	$(VERILATOR) ${VERILATER_FLAGS} ${TEST_INCLUDE_FLAGS} ${SIM_FLAGS} ${RISCV64_SRC_FILES} src/tb_$*.sv --top-module tb_$* -Mdir ${OUTDIR}
 
 .PHONY: clean

@@ -1,4 +1,4 @@
-`include "arch/riscv64_params.svh"
+`include "riscv64_params.svh"
 `include "fetch_types.svh"
 `include "decode_types.svh"
 
