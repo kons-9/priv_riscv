@@ -2,7 +2,14 @@
 all: run
 
 include ../env.mk
-include ${PROJECT_ROOT}/env.verilator.mk
+
+ifdef USE_DOCKER
+DOCKER:=$(shell which docker)
+VERILATOR:=docker run -it --rm -u $(shell id -u):$(shell id -g) verilator/verilator:v5.032
+endif
+
+include ${TOOLS_DIR}/makefile/env.verilator-validation.mk
+include ${TOOLS_DIR}/makefile/env.verilator.mk
 
 SIM_FLAGS?=-DSIM
 CONCURRENT?=$(shell nproc)
@@ -32,7 +39,7 @@ echo:
 	@echo ${RISCV64_DIR}
 
 build/Vtb_%: ${RISCV64_SRC_FILES} src/tb_%.sv
-	$(VERILATOR5) ${VERILATER_FLAGS} ${TEST_INCLUDE_FLAGS} ${SIM_FLAGS} ${RISCV64_SRC_FILES} src/tb_$*.sv --top-module tb_$* -Mdir ${OUTDIR}
+	$(VERILATOR) ${VERILATER_FLAGS} ${TEST_INCLUDE_FLAGS} ${SIM_FLAGS} ${RISCV64_SRC_FILES} src/tb_$*.sv --top-module tb_$* -Mdir ${OUTDIR}
 
 .PHONY: clean
 clean:
