@@ -18,10 +18,15 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+
+    - name: build docker
+      run: |
+        make unprivileged_verilator
+      working-directory: tools/docker
       
     - name: run unittest
       run: |
-        USE_DOCKER=1 make -j$(nproc) run
+        USE_DOCKER=1 make run
       working-directory: hardware/riscv64/test
 
 

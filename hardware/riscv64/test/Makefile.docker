@@ -1,0 +1,23 @@
+default: run
+THIS_DIR:=$(dir $(abspath $(lastword $(MAKEFILE_LIST))))
+include ../env.mk
+RELATIVE_THIS_DIR:=$(subst $(PROJECT_ROOT)/,,$(THIS_DIR))
+echo:
+	@echo $(THIS_DIR)
+	@echo $(RELATIVE_THIS_DIR)
+
+
+DOCKER:=$(shell which docker)
+DOCKER_IMAGE:=verilator
+DOCKER_IMAGE_TAG:=
+
+CONCURRENT:=$(shell nproc)
+
+prepare:
+	cd $(TOOLS_DIR)/docker && make verilator
+
+run: prepare
+	$(DOCKER) run --rm -u $(shell id -u):$(shell id -g) -w /work/$(RELATIVE_THIS_DIR) -v $(PROJECT_ROOT):/work verilator:latest \
+	/bin/bash -c "cd /work/$(RELATIVE_THIS_DIR) && make run -j$(CONCURRENT)"
+
+

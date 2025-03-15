@@ -1,14 +1,25 @@
 .PHONY: all
 all: run
+THIS_DIR:=$(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 
 include ../env.mk
 
 ifdef USE_DOCKER
 DOCKER:=$(shell which docker)
-VERILATOR:=docker run -it --rm -u $(shell id -u):$(shell id -g) verilator/verilator:v5.032
+ifdef USE_ROOT
+VERILATOR:=$(DOCKER) run --rm \
+			-v $(PROJECT_ROOT):$(PROJECT_ROOT) \
+			-w $(THIS_DIR) \
+			verilator/verilator:latest
+else
+VERILATOR:=$(DOCKER) run --rm \
+			-v $(PROJECT_ROOT):$(PROJECT_ROOT) \
+			-w $(THIS_DIR) \
+			unprivileged_verilator:latest
+endif
 endif
 
-include ${TOOLS_DIR}/makefile/env.verilator-validation.mk
+# include ${TOOLS_DIR}/makefile/env.verilator-validation.mk
 include ${TOOLS_DIR}/makefile/env.verilator.mk
 
 SIM_FLAGS?=-DSIM
