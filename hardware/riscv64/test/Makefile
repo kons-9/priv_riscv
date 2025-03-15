@@ -20,7 +20,6 @@ endif
 include ${TOOLS_DIR}/makefile/env.verilator-validation.mk
 include ${TOOLS_DIR}/makefile/env.verilator.mk
 
-SIM_FLAGS?=-DSIM
 CONCURRENT?=$(shell nproc)
 
 TEST_INCLUDE_FLAGS:=$(addprefix -I,${RISCV64_INCLUDE_DIRS}) -I${RISCV64_TEST_DIR}/include -I$(STD_TEST_INCLUDE_DIR)
@@ -36,7 +35,7 @@ PARAMS_FILE:=${RISCV64_TEST_DIR}/include/riscv64_params.svh
 prepare: ${OUTDIR} ${PARAMS_FILE}
 ${OUTDIR}:
 	mkdir -p ${OUTDIR}
-${PARAMS_FILE}: ${CONFIG_GENERATOR}
+${PARAMS_FILE}: ${CONFIG_GENERATOR} config.toml
 	$(CONFIG_GENERATOR)
 
 .PHONY: run
@@ -56,7 +55,7 @@ echo:
 	@echo ${RISCV64_DIR}
 
 build/Vtb_%: prepare ${RISCV64_SRC_FILES} src/tb_%.sv
-	$(VERILATOR) ${VERILATER_FLAGS} ${TEST_INCLUDE_FLAGS} ${SIM_FLAGS} ${RISCV64_SRC_FILES} src/tb_$*.sv --top-module tb_$* -Mdir ${OUTDIR}
+	$(VERILATOR) ${VERILATER_FLAGS} ${TEST_INCLUDE_FLAGS} ${RISCV64_SRC_FILES} src/tb_$*.sv --top-module tb_$* -Mdir ${OUTDIR}
 
 .PHONY: clean
 clean:

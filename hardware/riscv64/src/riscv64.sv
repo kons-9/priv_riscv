@@ -9,8 +9,7 @@ module riscv64 (
 
     fetch_types::input_t  fetch_input;
     fetch_types::output_t fetch_output;
-    assign fetch_input.clk   = clk;
-    assign fetch_input.rst_n = rst_n;
+    assign fetch_input.pc   = 64'h0;
 
     fetch fetch_inst (
         .fetch_input,

@@ -107,9 +107,6 @@ impl Params {
         if !Self::check_map::<String>(&self.str) {
             return false;
         }
-        if !Self::check_map::<String>(&self.define) {
-            return false;
-        }
         return true;
     }
 }

@@ -12,28 +12,48 @@ module tb_fetch;
         .fetch_input (fetch_input),
         .fetch_output(fetch_output)
     );
-
     output_t expected_output;
+
+    task automatic initialize();
+        #1;
+        fetch_inst.instr_ram[0] = 64'hdeadbeefdeadbeef;
+        fetch_inst.instr_ram[1] = 64'hdeadbeef00000000;
+        fetch_inst.instr_ram[2] = 64'hdeadbeef00000001;
+        fetch_inst.instr_ram[3] = 64'hdeadbeef00000002;
+        fetch_inst.instr_ram[4] = 64'hdeadbeef00000003;
+        fetch_inst.instr_ram[5] = 64'hdeadbeef00000004;
+        fetch_inst.instr_ram[6] = 64'hdeadbeef00000005;
+        fetch_inst.instr_ram[7] = 64'hdeadbeef00000006;
+        fetch_inst.instr_ram[8] = 64'hdeadbeef00000007;
+        fetch_inst.instr_ram[9] = 64'hdeadbeef00000008;
+        fetch_inst.instr_ram[10] = 64'hdeadbeef00000009;
+        fetch_inst.instr_ram[11] = 64'hdeadbeef0000000a;
+        fetch_inst.instr_ram[12] = 64'hdeadbeef0000000b;
+    endtask
+
 
     initial begin
         `TEST_START("tb_fetch.log");
-
-        fetch_input.clk   = 0;
-        fetch_input.rst_n = 0;
-        #1;
-        fetch_input.clk = 1;
-        #1;
-        fetch_input.rst_n = 1;
-        #1;
-        fetch_input.clk = 0;
-        #1;
-        fetch_input.clk = 1;
+        initialize();
         #1;
 
+        fetch_input.pc = 64'h0; // 0
         expected_output.instr = 64'hdeadbeefdeadbeef;
-        `TEST_EXPECTED(fetch_output, expected_output, "fetch_output");
+        #1;
+        `TEST_EXPECTED(expected_output.instr, fetch_output.instr, "fetch_output");
+        #1;
+
+        fetch_input.pc = 64'h8; // 1000
+        expected_output.instr = 64'hdeadbeef00000000;
+        #1;
+        `TEST_EXPECTED(expected_output.instr, fetch_output.instr, "fetch_output");
+        #1;
+        fetch_input.pc = 64'h18; // 11000
+        expected_output.instr = 64'hdeadbeef00000002;
+        #1
+        `TEST_EXPECTED(expected_output.instr, fetch_output.instr, "fetch_output");
+        #1;
 
         `TEST_RESULT();
     end
-    assign fetch_output.instr = 64'hdeadbeefdeadbeef;
 endmodule
