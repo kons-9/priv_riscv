@@ -3,9 +3,11 @@ extension = "svh"
 description = "sample test"
 
 [common.define]
+SIM = 1
 [common.int]
-INSTR_WIDTH = 64
+InstrWidth = 64
 [common.str]
+InstrRomFile = "fetch.hex"
 
 [[tests]]
 name = "test1"
