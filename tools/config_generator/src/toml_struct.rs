@@ -5,11 +5,11 @@ use toml::{map::Map, Value};
 
 #[derive(Serialize, Deserialize, Debug, PartialEq)]
 pub struct FileContexts {
-    name: String,
-    extension: String,
-    description: String,
+    pub(crate) name: String,
+    pub(crate) extension: String,
+    pub(crate) description: String,
     #[serde(flatten)]
-    config_type: ConfigType,
+    pub(crate) config_type: ConfigType,
 }
 
 impl FileContexts {
@@ -20,43 +20,20 @@ impl FileContexts {
             ConfigType::Test(_) => PathBuf::from("include").join(filename),
         }
     }
-
-    pub fn to_systemverilog(&self) -> String {
-        let header = format!(
-            "// description: {}\n`ifndef _{}\n`define _{}\n\n package {};\n",
-            self.description,
-            self.name.to_uppercase(),
-            self.name.to_uppercase(),
-            self.name,
-        );
-        let body = &self.config_type.to_systemverilog();
-        let footer = format!("endpackage\n`endif // _{}\n", self.name.to_uppercase());
-
-        header + &body + &footer
-    }
 }
 
 #[derive(Serialize, Deserialize, Debug, PartialEq)]
 #[serde(untagged)]
-pub enum ConfigType {
+pub(crate) enum ConfigType {
     Exec(Params),
     Test(Test),
 }
 
-impl ConfigType {
-    pub fn to_systemverilog(&self) -> String {
-        match self {
-            ConfigType::Exec(params) => params.to_systemverilog(),
-            ConfigType::Test(test) => test.to_systemverilog(),
-        }
-    }
-}
-
 #[derive(Debug, PartialEq)]
-pub struct Params {
-    int: Map<String, Value>,
-    str: Map<String, Value>,
-    define: Map<String, Value>,
+pub(crate) struct Params {
+    pub(crate) int: Map<String, Value>,
+    pub(crate) str: Map<String, Value>,
+    pub(crate) define: Map<String, Value>,
 }
 
 impl Serialize for Params {
@@ -135,51 +112,19 @@ impl Params {
         }
         return true;
     }
-    fn to_systemverilog(&self) -> String {
-        let mut body = String::new();
-        for (key, value) in &self.int {
-            body.push_str(&format!("    localparam int {} = {};\n", key, value));
-        }
-        for (key, value) in &self.str {
-            body.push_str(&format!("    localparam string {} = {};\n", key, value));
-        }
-        for (key, value) in &self.define {
-            body.push_str(&format!("    `define {} {}\n", key, value));
-        }
-        body
-    }
 }
 
 #[derive(Serialize, Deserialize, Debug, PartialEq)]
-pub struct Test {
-    common: Params,
-    tests: Vec<TestCase>,
-}
-
-impl Test {
-    pub fn to_systemverilog(&self) -> String {
-        let mut body = String::new();
-        body.push_str(&self.common.to_systemverilog());
-        for test_case in &self.tests {
-            body.push_str(&test_case.to_systemverilog());
-        }
-        body
-    }
+pub(crate) struct Test {
+    pub(crate) common: Params,
+    pub(crate) tests: Vec<TestCase>,
 }
 
 #[derive(Serialize, Deserialize, Debug, PartialEq)]
-pub struct TestCase {
-    name: String,
+pub(crate) struct TestCase {
+    pub(crate) name: String,
     #[serde(flatten)]
-    params: Params,
-}
-
-impl TestCase {
-    pub fn to_systemverilog(&self) -> String {
-        let mut body = String::new();
-        body.push_str(&self.params.to_systemverilog());
-        body
-    }
+    pub(crate) params: Params,
 }
 
 #[cfg(test)]
@@ -248,24 +193,6 @@ mod test {
                 params: Params::sample(),
             }
         }
-    }
-
-    #[test]
-    fn params_serialize() {
-        let params = Params::sample();
-        params.to_systemverilog();
-    }
-
-    #[test]
-    fn test_serialize() {
-        let test = Test::sample();
-        test.to_systemverilog();
-    }
-
-    #[test]
-    fn test_case_serialize() {
-        let test_case = TestCase::sample("test_case");
-        test_case.to_systemverilog();
     }
 
     #[test]
