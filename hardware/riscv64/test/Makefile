@@ -2,7 +2,7 @@
 all: run
 THIS_DIR:=$(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 
-include ../env.mk
+include env.mk
 
 ifdef USE_DOCKER
 DOCKER:=$(shell which docker)
