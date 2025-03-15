@@ -105,7 +105,7 @@ endtask
 
 // using macro because of unexpected type is not fixed but cannot use variadic
 // type in task
-`define TEST_EXPECTED_IMPL(expected, actual, message, file = `__FILE__, line = `__LINE__) \
+`define TEST_EXPECTED_IMPL(actual, expected, message, file = `__FILE__, line = `__LINE__) \
     __number_of_test++; \
     if (expected != actual) begin \
         __failed_count++; \
@@ -127,7 +127,7 @@ endtask
 
 // using macro because of unexpected type is not fixed but cannot use variadic
 // type in task
-`define TEST_UNEXPECTED_IMPL(unexpected, actual, message, file = `__FILE__, line = `__LINE__) \
+`define TEST_UNEXPECTED_IMPL(actual, unexpected, message, file = `__FILE__, line = `__LINE__) \
     __number_of_test++; \
     if (unexpected == actual) begin \
         __failed_count++; \
