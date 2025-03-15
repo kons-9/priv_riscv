@@ -1,5 +1,5 @@
-.PHONY: all
-all: run
+.PHONY: default
+default: run
 THIS_DIR:=$(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 
 include env.mk
@@ -19,7 +19,7 @@ VERILATOR:=$(DOCKER) run --rm \
 endif
 endif
 
-# include ${TOOLS_DIR}/makefile/env.verilator-validation.mk
+include ${TOOLS_DIR}/makefile/env.verilator-validation.mk
 include ${TOOLS_DIR}/makefile/env.verilator.mk
 
 SIM_FLAGS?=-DSIM
@@ -32,6 +32,10 @@ TEST_TARGETS:= $(subst tb_,,$(basename $(notdir ${TEST_SRC})))
 RUN_TARGETS:=$(addprefix run_,$(TEST_TARGETS))
 
 OUTDIR:=build
+
+prepare: $(CONFIG_GENERATOR)
+	mkdir -p ${OUTDIR}
+	$(CONFIG_GENERATOR)
 
 .PHONY: run
 run: ${RUN_TARGETS}

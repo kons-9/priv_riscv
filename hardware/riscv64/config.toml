@@ -1,0 +1,8 @@
+name = "riscv64_params"
+extension = "svh"
+description = "RISC-V 64-bit parameters"
+
+[int]
+INSTR_WIDTH = 64
+[str]
+[define]

@@ -1,6 +1,6 @@
 ifndef RISCV64_ENV
 RISCV64_ENV:=1
-RISCV64_DIR := $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
+RISCV64_DIR := $(abspath $(dir $(lastword $(MAKEFILE_LIST))))/../
 RISCV64_INCLUDE_DIRS := $(RISCV64_DIR)/include
 RISCV64_SRC_DIR := $(RISCV64_DIR)/src
 RISCV64_TEST_DIR := $(RISCV64_DIR)/test

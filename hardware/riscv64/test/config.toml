@@ -1,0 +1,22 @@
+name = "riscv64_params"
+extension = "svh"
+description = "sample test"
+
+[common.define]
+[common.int]
+INSTR_WIDTH = 64
+[common.str]
+
+[[tests]]
+name = "test1"
+
+[tests.define]
+[tests.int]
+[tests.str]
+
+[[tests]]
+name = "test2"
+
+[tests.define]
+[tests.int]
+[tests.str]
