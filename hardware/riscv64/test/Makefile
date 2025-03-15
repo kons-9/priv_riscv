@@ -1,7 +1,5 @@
 .PHONY: default
 default: run
-THIS_DIR:=$(dir $(abspath $(lastword $(MAKEFILE_LIST))))
-
 include env.mk
 
 ifdef USE_DOCKER
@@ -9,12 +7,12 @@ DOCKER:=$(shell which docker)
 ifdef USE_ROOT
 VERILATOR:=$(DOCKER) run --rm \
 			-v $(PROJECT_ROOT):$(PROJECT_ROOT) \
-			-w $(THIS_DIR) \
+			-w $(RISCV64_TEST_DIR) \
 			verilator/verilator:latest
 else
 VERILATOR:=$(DOCKER) run --rm \
 			-v $(PROJECT_ROOT):$(PROJECT_ROOT) \
-			-w $(THIS_DIR) \
+			-w $(RISCV64_TEST_DIR) \
 			unprivileged_verilator:latest
 endif
 endif
