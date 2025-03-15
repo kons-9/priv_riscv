@@ -23,10 +23,15 @@ jobs:
       run: |
         make unprivileged_verilator
       working-directory: tools/docker
-      
+
     - name: run unittest
       run: |
         USE_DOCKER=1 make run
       working-directory: hardware/riscv64/test
+
+    - name: run unittest
+      run: |
+        USE_DOCKER=1 make run
+      working-directory: hardware/uart/test
 
 
