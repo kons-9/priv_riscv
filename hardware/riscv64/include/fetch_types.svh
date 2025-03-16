@@ -1,12 +1,18 @@
 `ifndef FETCH_TYPES_SVH
 `define FETCH_TYPES_SVH
 
-`include "riscv64_params.svh"
+`include "types.svh"
 
 package fetch_types;
-    localparam int PcWidth = $clog2(riscv64_params::InstrWidth);
-    typedef struct {logic [PcWidth-1:0] pc;} input_t;
-    typedef struct {logic [riscv64_params::InstrWidth -1:0] instr;} output_t;
+    typedef struct packed {types::pc_t pc;} input_t;
+
+    typedef struct packed {
+        types::instr_t instr;
+        types::pc_t pc;
+    } decoder_output_t;
+    typedef struct packed {
+        decoder_output_t decoder;
+    } output_t;
 endpackage
 
 `endif  // FETCH_TYPES_SVH

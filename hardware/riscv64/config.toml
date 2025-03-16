@@ -3,7 +3,7 @@ extension = "svh"
 description = "RISC-V 64-bit parameters"
 
 [int]
-InstrWidth = 64
+InstrWidth = 32
 [str]
 InstrRomFile = "fetch.hex"
 [define]

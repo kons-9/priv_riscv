@@ -18,7 +18,7 @@ module riscv64 (
 
     decode_types::input_t  decode_input;
     decode_types::output_t decode_output;
-    assign decode_input.instr = fetch_output.instr;
+    assign decode_input = fetch_output.decoder;
 
     decode decode_inst (
         .decode_input,
