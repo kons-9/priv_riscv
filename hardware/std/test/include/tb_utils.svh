@@ -26,11 +26,11 @@
 `define TEST_START(test_log_path) \
     `TEST_START_IMPL(test_log_path)
 
-`define TEST_EXPECTED(actual, expected, message, file = `__FILE__, line = `__LINE__) \
-    `TEST_EXPECTED_IMPL(actual, expected, message, file, line)
+`define TEST_EXPECTED(expected, actual, message, file = `__FILE__, line = `__LINE__) \
+    `TEST_EXPECTED_IMPL(expected, actual, message, file, line)
 
-`define TEST_UNEXPECTED(actual, unexpected, message, file = `__FILE__, line = `__LINE__) \
-    `TEST_UNEXPECTED_IMPL(actual, unexpected, message, file, line)
+`define TEST_UNEXPECTED(unexpected, actual, message, file = `__FILE__, line = `__LINE__) \
+    `TEST_UNEXPECTED_IMPL(unexpected, actual, message, file, line)
 
 `define TEST_RESULT() \
     `TEST_RESULT_IMPL()

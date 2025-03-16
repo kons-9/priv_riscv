@@ -105,21 +105,21 @@ endtask
 
 // using macro because of unexpected type is not fixed but cannot use variadic
 // type in task
-`define TEST_EXPECTED_IMPL(actual, expected, message, file = `__FILE__, line = `__LINE__) \
+`define TEST_EXPECTED_IMPL(expected, actual, message, file = `__FILE__, line = `__LINE__) \
     __number_of_test++; \
     if (expected != actual) begin \
         __failed_count++; \
         `RED_COLOR \
         if (__test_section_valid) begin \
-            $display("[%s] Error: %s, actual = %0h, expected = %0h(file:%0s line:%0d)", \
-                     __test_section_name, message, actual, expected, file, line); \
-            $fwrite(__fd, "[%s] Error: %s, actual = %0h, expected = %0h(file:%0s line:%0d)\n", \
-                    __test_section_name, message, actual, expected, file, line); \
+            $display(     "[%s] Error: %s, expected = %0h, actual = %0h(file:%0s line:%0d)", \
+                __test_section_name, message, expected, actual, file, line); \
+            $fwrite(__fd, "[%s] Error: %s, expected = %0h, actual = %0h(file:%0s line:%0d)\n", \
+                __test_section_name, message, expected, actual, file, line); \
         end else begin \
-            $display("Error: %s, actual = %0h, expected = %0h(file:%0s line:%0d)", message, actual, \
-                     expected, file, line); \
-            $fwrite(__fd, "Error: %s, actual = %0h, expected = %0h(file:%0s line:%0d)\n", message, \
-                    actual, expected, file, line); \
+            $display(     "Error: %s, expected = %0h, actual = %0h(file:%0s line:%0d)", \
+                message, expected, actual, file, line); \
+            $fwrite(__fd, "Error: %s, expected = %0h, actual = %0h(file:%0s line:%0d)\n", \
+                message, expected, actual, file, line); \
         end \
         `RESET_COLOR \
         __immidiate_exit(); \
@@ -127,21 +127,21 @@ endtask
 
 // using macro because of unexpected type is not fixed but cannot use variadic
 // type in task
-`define TEST_UNEXPECTED_IMPL(actual, unexpected, message, file = `__FILE__, line = `__LINE__) \
+`define TEST_UNEXPECTED_IMPL(unexpected, actual, message, file = `__FILE__, line = `__LINE__) \
     __number_of_test++; \
     if (unexpected == actual) begin \
         __failed_count++; \
         `RED_COLOR \
         if (__test_section_valid) begin \
-            $display("[%s] Error: %s, actual = %0d, unexpected = %0d(file:%0s line:%0d)", \
-                     __test_section_name, message, actual, unexpected, file, line); \
-            $fwrite(__fd, "[%s] Error: %s, actual = %0d, unexpected = %0d(file:%0s line:%0d)\n", \
-                    __test_section_name, message, actual, unexpected, file, line); \
+            $display(     "[%s] Error: %s, unexpected = %0d, actual = %0d(file:%0s line:%0d)", \
+                __test_section_name, message, unexpected, actual, file, line); \
+            $fwrite(__fd, "[%s] Error: %s, unexpected = %0d, actual = %0d(file:%0s line:%0d)\n", \
+                __test_section_name, message, unexpected, actual, file, line); \
         end else begin \
-            $display("Error: %s, actual = %0d, unexpected = %0d(file:%0s line:%0d)", message, \
-                     actual, unexpected, file, line); \
-            $fwrite(__fd, "Error: %s, actual = %0d, unexpected = %0d(file:%0s line:%0d)\n", \
-                    message, actual, unexpected, file, line); \
+            $display(     "Error: %s, unexpected = %0d, actual = %0d(file:%0s line:%0d)", \
+                message, unexpected, actual, file, line); \
+            $fwrite(__fd, "Error: %s, unexpected = %0d, actual = %0d(file:%0s line:%0d)\n", \
+                message, unexpected, actual, file, line); \
         end \
         `RESET_COLOR \
         __immidiate_exit(); \
