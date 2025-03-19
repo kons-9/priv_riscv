@@ -72,6 +72,7 @@ module tb_decode;
         expected_output.imm    = 32'h8000000; // 0x8000 << 12
         
         #1;
+        // U-Type
         `TEST_EXPECTED(expected_output.opcode, decode_output.opcode, "lui");
         `TEST_EXPECTED(expected_output.rd, decode_output.rd, "lui");
         `TEST_EXPECTED(expected_output.imm, decode_output.imm, "lui");
@@ -83,16 +84,23 @@ module tb_decode;
         expected_output.rd     = 6;
         expected_output.imm    = 32'h8000000; // 0x8000 << 12
         #1;
+        // U-Type
         `TEST_EXPECTED(expected_output.opcode, decode_output.opcode, "auipc");
         `TEST_EXPECTED(expected_output.rd, decode_output.rd, "auipc");
         `TEST_EXPECTED(expected_output.imm, decode_output.imm, "auipc");
         #1;
 
         decode_input.instr = 32'hff9ff2ef; // jal     t0,0 <_start>
+        // this operation address is 0x8
         decode_input.pc    = 32'h8;
         expected_output.opcode = opcode_types::JAL;
+        expected_output.rd     = 5;
+        expected_output.imm    = -8;
         #1;
+        // J-Type
         `TEST_EXPECTED(expected_output.opcode, decode_output.opcode, "jal");
+        `TEST_EXPECTED(expected_output.rd, decode_output.rd, "jal");
+        `TEST_EXPECTED(expected_output.imm, decode_output.imm, "jal");
         #1;
 
         decode_input.instr = 32'h00028367; // jalr    t1,t0 # 8000000 <_start+0x8000000>
