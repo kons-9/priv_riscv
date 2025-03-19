@@ -5,6 +5,6 @@ module execute (
     output execute_types::output_t execute_output
 );
 
-    assign execute_output.clk = execute_input.clk;
+    assign execute_output.clk = 1;
 
 endmodule

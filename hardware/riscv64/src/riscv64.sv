@@ -25,13 +25,4 @@ module riscv64 (
         .decode_output
     );
 
-    execute_types::input_t  execute_input;
-    execute_types::output_t execute_output;
-    assign execute_input.clk = clk;
-
-    execute execute_inst (
-        .execute_input,
-        .execute_output
-    );
-
 endmodule
