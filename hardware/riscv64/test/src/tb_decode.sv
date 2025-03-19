@@ -106,8 +106,17 @@ module tb_decode;
         decode_input.instr = 32'h00028367; // jalr    t1,t0 # 8000000 <_start+0x8000000>
         decode_input.pc    = 32'h0xc;
         expected_output.opcode = opcode_types::JALR;
+        expected_output.rs1 = 5;
+        expected_output.rd = 6;
+        expected_output.funct3 = 0;
+        expected_output.imm = 0;
         #1;
+        // I-type
         `TEST_EXPECTED(expected_output.opcode, decode_output.opcode, "jalr");
+        `TEST_EXPECTED(expected_output.rs1, decode_output.rs1, "jalr");
+        `TEST_EXPECTED(expected_output.rd, decode_output.rd, "jalr");
+        `TEST_EXPECTED(expected_output.funct3, decode_output.funct3, "jalr");
+        `TEST_EXPECTED(expected_output.imm, decode_output.imm, "jalr");
         #1;
 
         decode_input.instr = 32'h00629463; // bne     t0,t1,18 <_start+0x18>
