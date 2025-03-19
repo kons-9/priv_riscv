@@ -64,13 +64,13 @@ module tb_decode;
         `ENABLE_FATAL();
         `ENABLE_IMMIDIATE_EXIT();
 
-        decode_input.instr = 32'h0800_02b7; // lui     t0,0x8000
+        decode_input.instr     = 32'h0800_02b7;  // lui     t0,0x8000
         // 0000_0100_0000_0000_0000_0010_1011_0111
-        decode_input.pc    = 32'h0;
+        decode_input.pc        = 32'h0;
         expected_output.opcode = opcode_types::LUI;
         expected_output.rd     = 5;
-        expected_output.imm    = 32'h8000000; // 0x8000 << 12
-        
+        expected_output.imm    = 32'h8000000;  // 0x8000 << 12
+
         #1;
         // U-Type
         `TEST_EXPECTED(expected_output.opcode, decode_output.opcode, "lui");
@@ -78,11 +78,11 @@ module tb_decode;
         `TEST_EXPECTED(expected_output.imm, decode_output.imm, "lui");
         #1;
 
-        decode_input.instr = 32'h08000317; // auipc   t1,0x8000
-        decode_input.pc    = 32'h4;
+        decode_input.instr     = 32'h08000317;  // auipc   t1,0x8000
+        decode_input.pc        = 32'h4;
         expected_output.opcode = opcode_types::AUIPC;
         expected_output.rd     = 6;
-        expected_output.imm    = 32'h8000000; // 0x8000 << 12
+        expected_output.imm    = 32'h8000000;  // 0x8000 << 12
         #1;
         // U-Type
         `TEST_EXPECTED(expected_output.opcode, decode_output.opcode, "auipc");
@@ -90,9 +90,9 @@ module tb_decode;
         `TEST_EXPECTED(expected_output.imm, decode_output.imm, "auipc");
         #1;
 
-        decode_input.instr = 32'hff9ff2ef; // jal     t0,0 <_start>
+        decode_input.instr     = 32'hff9ff2ef;  // jal     t0,0 <_start>
         // this operation address is 0x8
-        decode_input.pc    = 32'h8;
+        decode_input.pc        = 32'h8;
         expected_output.opcode = opcode_types::JAL;
         expected_output.rd     = 5;
         expected_output.imm    = -8;
@@ -123,6 +123,7 @@ module tb_decode;
         decode_input.pc    = 32'h0x10;
         expected_output.opcode = opcode_types::BRANCH;
         #1;
+        // B-Type
         `TEST_EXPECTED(expected_output.opcode, decode_output.opcode, "bne");
         #1;
 
