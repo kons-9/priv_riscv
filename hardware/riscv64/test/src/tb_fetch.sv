@@ -1,6 +1,6 @@
 `include "fetch_types.svh"
 
-`include "tb_utils.svh"
+`include "test_utils.svh"
 
 module tb_fetch;
     import fetch_types::*;

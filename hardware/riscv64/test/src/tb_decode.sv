@@ -1,7 +1,7 @@
 `include "decode_types.svh"
 `include "fetch_types.svh"
 
-`include "tb_utils.svh"
+`include "test_utils.svh"
 
 module tb_decode;
     decode_types::input_t  decode_input;
@@ -122,6 +122,10 @@ module tb_decode;
         decode_input.instr = 32'h00629463; // bne     t0,t1,18 <_start+0x18>
         decode_input.pc    = 32'h0x10;
         expected_output.opcode = opcode_types::BRANCH;
+        // expected_output.rs1 
+        // expected_output.rd
+        // expected_output.funct3
+        // expected_outptu.imm= 
         #1;
         // B-Type
         `TEST_EXPECTED(expected_output.opcode, decode_output.opcode, "bne");
