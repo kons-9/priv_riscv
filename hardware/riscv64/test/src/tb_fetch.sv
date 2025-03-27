@@ -1,6 +1,6 @@
 `include "fetch_types.svh"
 
-`include "tb_utils.svh"
+`include "sv_test.svh"
 
 module tb_fetch;
     import fetch_types::*;
@@ -16,19 +16,19 @@ module tb_fetch;
 
     task automatic initialize();
         #1;
-        fetch_inst.instr_ram[0] = 64'hdeadbeefdeadbeef;
-        fetch_inst.instr_ram[1] = 64'hdeadbeef00000000;
-        fetch_inst.instr_ram[2] = 64'hdeadbeef00000001;
-        fetch_inst.instr_ram[3] = 64'hdeadbeef00000002;
-        fetch_inst.instr_ram[4] = 64'hdeadbeef00000003;
-        fetch_inst.instr_ram[5] = 64'hdeadbeef00000004;
-        fetch_inst.instr_ram[6] = 64'hdeadbeef00000005;
-        fetch_inst.instr_ram[7] = 64'hdeadbeef00000006;
-        fetch_inst.instr_ram[8] = 64'hdeadbeef00000007;
-        fetch_inst.instr_ram[9] = 64'hdeadbeef00000008;
-        fetch_inst.instr_ram[10] = 64'hdeadbeef00000009;
-        fetch_inst.instr_ram[11] = 64'hdeadbeef0000000a;
-        fetch_inst.instr_ram[12] = 64'hdeadbeef0000000b;
+        fetch_inst.instr_ram[0]  = 32'hdeadbeef;
+        fetch_inst.instr_ram[1]  = 32'h00000000;
+        fetch_inst.instr_ram[2]  = 32'h00000001;
+        fetch_inst.instr_ram[3]  = 32'h00000002;
+        fetch_inst.instr_ram[4]  = 32'h00000003;
+        fetch_inst.instr_ram[5]  = 32'h00000004;
+        fetch_inst.instr_ram[6]  = 32'h00000005;
+        fetch_inst.instr_ram[7]  = 32'h00000006;
+        fetch_inst.instr_ram[8]  = 32'h00000007;
+        fetch_inst.instr_ram[9]  = 32'h00000008;
+        fetch_inst.instr_ram[10] = 32'h00000009;
+        fetch_inst.instr_ram[11] = 32'h0000000a;
+        fetch_inst.instr_ram[12] = 32'h0000000b;
     endtask
 
 
@@ -37,21 +37,21 @@ module tb_fetch;
         initialize();
         #1;
 
-        fetch_input.pc = 64'h0; // 0
-        expected_output.instr = 64'hdeadbeefdeadbeef;
+        fetch_input.pc = 32'h0; // 0
+        expected_output.decoder.instr = 32'hdeadbeef;
         #1;
-        `TEST_EXPECTED(expected_output.instr, fetch_output.instr, "fetch_output");
+        `TEST_EXPECTED(expected_output.decoder, fetch_output.decoder, "fetch_output");
         #1;
 
-        fetch_input.pc = 64'h8; // 1000
-        expected_output.instr = 64'hdeadbeef00000000;
+        fetch_input.pc = 32'h8; // 1000
+        expected_output.decoder.instr = 32'h00000001;
         #1;
-        `TEST_EXPECTED(expected_output.instr, fetch_output.instr, "fetch_output");
+        `TEST_EXPECTED(expected_output.decoder.instr, fetch_output.decoder.instr, "fetch_output");
         #1;
-        fetch_input.pc = 64'h18; // 11000
-        expected_output.instr = 64'hdeadbeef00000002;
+        fetch_input.pc = 32'h18; // 11000
+        expected_output.decoder.instr = 32'h00000005;
         #1
-        `TEST_EXPECTED(expected_output.instr, fetch_output.instr, "fetch_output");
+        `TEST_EXPECTED(expected_output.decoder.instr, fetch_output.decoder.instr, "fetch_output");
         #1;
 
         `TEST_RESULT();

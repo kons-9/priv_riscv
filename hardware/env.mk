@@ -1,10 +1,9 @@
-ifndef STD_ENV
-STD_ENV:=1
+ifndef HARDWARE_ENV
+HARDWARE_ENV:=1
 
 HARDWARE_DIR := $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
-STD_DIR := $(HARDWARE_DIR)/std
+UTILS_DIR := $(HARDWARE_DIR)/sv_utils
 
-STD_INCLUDE_DIR := $(STD_DIR)/include
-STD_TEST_INCLUDE_DIR := $(STD_DIR)/test/include
+include $(UTILS_DIR)/Makefile.inc
 
 endif

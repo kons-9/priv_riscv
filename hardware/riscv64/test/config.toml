@@ -5,7 +5,7 @@ description = "sample test"
 [common.define]
 SIM = 1
 [common.int]
-InstrWidth = 64
+InstrWidth = 32
 [common.str]
 InstrRomFile = "fetch.hex"
 

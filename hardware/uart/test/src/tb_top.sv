@@ -1,4 +1,4 @@
-`include "tb_utils.svh"
+`include "sv_test.svh"
 
 module tb_top;
     logic clk;
