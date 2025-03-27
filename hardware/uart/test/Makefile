@@ -23,7 +23,7 @@ include ${TOOLS_DIR}/makefile/env.verilator.mk
 SIM_FLAGS?=-DSIM
 CONCURRENT?=$(shell nproc)
 
-TEST_INCLUDE_FLAGS:=$(addprefix -I,${UART_INCLUDE_DIRS}) -I${UART_TEST_DIR}/include -I$(STD_TEST_INCLUDE_DIR)
+TEST_INCLUDE_FLAGS:=$(addprefix -I,${UART_INCLUDE_DIRS}) -I${UART_TEST_DIR}/include $(SV_UTILS_SV_INCLUDE)
 TEST_SRC:=$(shell \find ${UART_TEST_DIR}/src -name "*.sv")
 # remove tb_ prefix from testbench files
 TEST_TARGETS:= $(subst tb_,,$(basename $(notdir ${TEST_SRC})))

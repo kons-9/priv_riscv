@@ -1,7 +1,7 @@
 `include "decode_types.svh"
 `include "fetch_types.svh"
 
-`include "test_utils.svh"
+`include "sv_test.svh"
 
 module tb_decode;
     decode_types::input_t  decode_input;
@@ -61,8 +61,6 @@ module tb_decode;
         // b0:   8330000f                fence.tso
         // b4:   00000073                ecall
         // b8:   00100073                ebreak
-        `ENABLE_FATAL();
-        `ENABLE_IMMIDIATE_EXIT();
 
         decode_input.instr     = 32'h0800_02b7;  // lui     t0,0x8000
         // 0000_0100_0000_0000_0000_0010_1011_0111

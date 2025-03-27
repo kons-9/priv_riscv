@@ -22,7 +22,7 @@ include ${TOOLS_DIR}/makefile/env.verilator.mk
 
 CONCURRENT?=$(shell nproc)
 
-TEST_INCLUDE_FLAGS:=$(addprefix -I,${RISCV64_INCLUDE_DIRS}) -I${RISCV64_TEST_DIR}/include -I$(STD_TEST_INCLUDE_DIR)
+TEST_INCLUDE_FLAGS:=$(addprefix -I,${RISCV64_INCLUDE_DIRS}) -I${RISCV64_TEST_DIR}/include $(SV_UTILS_SV_INCLUDE)
 TEST_SRC:=$(shell \find ${RISCV64_TEST_DIR}/src -name "*.sv")
 # remove tb_ prefix from testbench files
 TEST_TARGETS:= $(subst tb_,,$(basename $(notdir ${TEST_SRC})))
