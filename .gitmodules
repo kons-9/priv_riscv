@@ -1,0 +1,3 @@
+[submodule "hardware/sv_utils"]
+	path = hardware/sv_utils
+	url = https://github.com/kons-9/sv_utils.git
